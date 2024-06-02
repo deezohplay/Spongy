@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     // start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>(); //locates the rigid component on the game object
     }
 
     // update is called once per frame
