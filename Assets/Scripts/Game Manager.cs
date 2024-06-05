@@ -19,9 +19,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isGameOn = true)
+        if(isGameOn == true)
         {
             //turn off button and title
+            gameObject.SetActive(false);
+            gameObject.SetActive(false);
             //start game sound and effects
             //turn off cool game background
         }
