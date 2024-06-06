@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,7 +14,17 @@ public class PlayerMovement : MonoBehaviour
     private float moveVertical;
     public Joystick joystick;
     public bool isJumping;
+    public Button jumpButton;
 
+    public static PlayerMovement Instance
+    {
+        get; set;
+    }
+
+    void Awake()
+    {
+        Instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -22,20 +34,23 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Moves the player left and right
-        if(joystick.Horizontal >= .2f)
+        if(GameManager.Instance.isGameOn == true)
         {
-            moveHorizontal = speed;
+            //Moves the player left and right
+            if(joystick.Horizontal >= .2f)
+            {
+                moveHorizontal = speed;
+            }
+            else if(joystick.Horizontal <= -.2f)
+            {
+                moveHorizontal = -speed;
+            }
+            else
+            {
+                moveHorizontal = 0f;
+            }
+            rb.velocity = new Vector2(speed * moveHorizontal, rb.velocity.y);
         }
-        else if(joystick.Horizontal <= -.2f)
-        {
-            moveHorizontal = -speed;
-        }
-        else
-        {
-            moveHorizontal = 0f;
-        }
-        rb.velocity = new Vector2(speed * moveHorizontal, rb.velocity.y);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -50,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
     public void Jump()
     {
         //lets the player jump only if on the ground
-        if(isJumping == false)
+        if(isJumping == false && GameManager.Instance.isGameOn == true)
         {
             moveVertical = jump;
             rb.AddForce(new Vector2(rb.velocity.x, jump));
